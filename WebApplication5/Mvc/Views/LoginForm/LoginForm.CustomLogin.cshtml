@@ -1,0 +1,20 @@
+﻿@model Telerik.Sitefinity.Frontend.Identity.Mvc.Models.LoginForm.LoginFormViewModel
+
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+@using Telerik.Sitefinity.Modules.Pages;
+
+@Html.Script(ScriptRef.JQuery, "top", false)
+
+@if (Telerik.Sitefinity.Security.SecurityManager.GetCurrentUserId() == Guid.Empty)
+{
+    string providerName = "CustomSTS"; 
+    @Html.ActionLink(providerName, "LoginExternalProvider", new { model = providerName }, new { @class = "custom-sts", style = "display:none;" })
+      
+    <script>
+        window.location = $('.custom-sts').attr('href');
+    </script>
+}
+else
+{
+    <p>@Html.Resource("AlreadyLoggedIn")</p>
+}
